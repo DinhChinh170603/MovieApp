@@ -9,20 +9,21 @@ const FeatureMovies = () => {
   useEffect(() => {
     fetch("https://api.themoviedb.org/3/movie/popular", {
       method: "GET",
-      url: "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
       headers: {
         accept: "application/json",
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxODhkNDUzZTI4NDUyZmViMGYwMjJkMjhkODAxZjAxNiIsIm5iZiI6MTcyMTI4OTczOC40MjA1NzUsInN1YiI6IjY2OTU0MWE2ZWQxNzMxMjMxNmUwNTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0eALvYBNYWk5yQ-1ZvDc6IlSp0GBuovXfepJuE4uYzw",
       },
-    }).then(async (res) => {
-      const data = await res.json();
-      const popu = data.results.slice(0, 4);
-      setFeaturedMovies(popu);
-      setActiveMovie(popu[0].id);
-    }).catch((err) => {
-      console.error(err);
-    });
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        const popu = data.results.slice(0, 4);
+        setFeaturedMovies(popu);
+        setActiveMovie(popu[0].id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   // console.log(featuredMovies);
@@ -32,9 +33,7 @@ const FeatureMovies = () => {
       {featuredMovies
         .filter((movie) => movie.id === activeMovie)
         .map((movie) => (
-          <Movie key={movie.id} 
-          featuredMovies={featuredMovies} 
-          />
+          <Movie key={movie.id} featuredMovies={featuredMovies} />
         ))}
       <PaginateIndicator
         featuredMovies={featuredMovies}
