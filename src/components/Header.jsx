@@ -1,5 +1,6 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from "../assets/netflix.png";
 
 const Header = () => {
   return (
@@ -7,7 +8,7 @@ const Header = () => {
       <div className="flex items-center gap-8">
         <img
           className="w-16 sm:w-28"
-          src="/src/assets/netflix.png"
+          src={logo}
           alt="netflix logo"
         />
         <a href="/">Movie</a>

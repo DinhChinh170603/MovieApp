@@ -2,20 +2,11 @@ import { useEffect, useState } from "react";
 import PaginateIndicator from "./PaginateIndicator";
 import Movie from "./Movie";
 import axios from "../../services/axios";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const FeatureMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [activeMovie, setActiveMovie] = useState();
-
-  // const [currentIndex, setCurrentIndex] = useState(0);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredMovies.length);
-  //   }, 5000);
-
-  //   return () => clearInterval(interval);
-  // }, [featuredMovies.length]);
 
   useEffect(() => {
     axios.get("movie/popular?language=en-US&page=1")
@@ -29,13 +20,34 @@ const FeatureMovies = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveMovie((prev) => {
+        const currentIndex = featuredMovies.findIndex(movie => movie.id === prev);
+        const nextIndex = (currentIndex + 1) % featuredMovies.length;
+        return featuredMovies[nextIndex].id;
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [featuredMovies]);
+
   return (
     <div className="relative text-white">
-      {featuredMovies
-        .filter((movie) => activeMovie === movie.id)
-        .map((movie) => (
-          <Movie key={movie.id} featuredMovies={movie} />
-        ))}
+      <TransitionGroup>
+        {featuredMovies
+          .filter((movie) => activeMovie === movie.id)
+          .map((movie) => (
+            <CSSTransition
+              key={movie.id}
+              timeout={500}
+              classNames="slide"
+              // unmountOnExit
+            >
+              <Movie key={movie.id} featuredMovies={movie} />
+            </CSSTransition>
+          ))}
+      </TransitionGroup>
       <PaginateIndicator
         featuredMovies={featuredMovies}
         activeMovie={activeMovie}

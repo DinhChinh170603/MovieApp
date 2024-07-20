@@ -3,6 +3,7 @@ const CircularProgressBar = ({
   size = 2,
   strokeWidth = 0.2,
 }) => {
+
   const radius = size / 2 - strokeWidth;
   const perimeter = 2 * Math.PI * radius;
   const transO = size / 2;

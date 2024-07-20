@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;500;600;700&display=swap");
+
 @font-face {
   font-family: "Netflix Sans";
   src:
@@ -34,10 +36,47 @@
 }
 
 body {
+  background: black;
   font-family: "Netflix Sans";
+  overflow-x: hidden;
 }
 
 .bg-img {
   background: rgb(0 0 0 / 40%);
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.slide-enter {
+  transform: translateX(100%);
+  /* display: none; */
+}
+.slide-enter-active {
+  transform: translateX(0);
+  transition: transform 700ms ease-in-out;
+}
+.slide-exit {
+  transform: translateX(0);
+}
+.slide-exit-active {
+  display: none;
+  transform: translateX(-100%);
+  transition: transform 700ms ease-in-out;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(78.99deg, #E50914 3.34%, #121212 92.4%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

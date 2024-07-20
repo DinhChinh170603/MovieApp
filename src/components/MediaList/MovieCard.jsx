@@ -33,7 +33,7 @@ const MovieCard = (props) => {
             alt={nameOfMovie}
           />
         </div>
-        <div className="relative -top-[1vw] px-[1.5vw] text-[1.1vw]">
+        <div className="relative -top-[1vw] px-[3vw] text-[1.1vw] sm:px-[2vw] md:px-[1.5vw]">
           <CircularProgressBar vote_average={vote_average} />
           <p className="mt-[0.5vw] font-bold">{nameOfMovie}</p>
           <p className="text-slate-300 text-[0.9vw]">{dateOfMovie}</p>
