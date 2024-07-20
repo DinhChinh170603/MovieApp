@@ -1,54 +1,35 @@
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
+import axios from "../../services/axios";
 
-const TABS = [
-  {
-    id: "all",
-    name: "All",
-  },
-  {
-    id: "movie",
-    name: "Movie",
-  },
-  {
-    id: "tv",
-    name: "TV Shows",
-  },
-];
-
-const MediaList = () => {
+const MediaList = ({ title, tabs }) => {
   const [movies, setMovies] = useState([]);
 
-  const [activeTab, setActiveTab] = useState(TABS[0].id);
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+
+  const url = tabs.find((tab) => tab.id === activeTab)?.url;
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/trending/${activeTab}/day?language=en-US`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxODhkNDUzZTI4NDUyZmViMGYwMjJkMjhkODAxZjAxNiIsIm5iZiI6MTcyMTQ1MDc0MS4zODkzNjQsInN1YiI6IjY2OTU0MWE2ZWQxNzMxMjMxNmUwNTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_TWjIx0FqBkIk-SUaypORqpw-ir8FGmyexQHx_81jM",
-      },
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        console.log(data);
-        setMovies(data.results.slice(0, 12));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [activeTab]);
+    if (url) {
+      axios.get(url)
+        .then(async (res) => {
+          setMovies(res.data.results.slice(0, 12));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [url]);
 
   return (
-    <div className="flex flex-col gap-6 bg-black px-[4vw] py-[6vw] text-white">
+    <div className="flex flex-col gap-6 bg-black px-[4vw] pt-[6vw] pb-[3vw] text-white">
       <div className="flex items-center gap-8">
-        <p className="text-[2vw] font-bold">Trending</p>
+        <p className="text-[2vw] font-bold">{title}</p>
         <ul className="flex cursor-pointer rounded border border-white text-[1vw]">
-          {TABS.map((tab) => (
+          {tabs.map((tab) => (
             <li
               key={tab.id}
-              className={`rounded-s px-[1.2vw] py-[0.3vw] ${tab.id === activeTab ? 'text-black bg-white' : ''}`}
+              className={`rounded-[0.18vw] px-[1.2vw] py-[0.3vw] ${tab.id === activeTab ? "bg-white text-black" : ""}`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.name}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import Movie from "./Movie";
 import PaginateIndicator from "./PaginateIndicator";
+import Movie from "./Movie";
+import axios from "../../services/axios";
 
 const FeatureMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
@@ -17,17 +18,9 @@ const FeatureMovies = () => {
   // }, [featuredMovies.length]);
 
   useEffect(() => {
-    fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxODhkNDUzZTI4NDUyZmViMGYwMjJkMjhkODAxZjAxNiIsIm5iZiI6MTcyMTQ1MDc0MS4zODkzNjQsInN1YiI6IjY2OTU0MWE2ZWQxNzMxMjMxNmUwNTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_TWjIx0FqBkIk-SUaypORqpw-ir8FGmyexQHx_81jM",
-      },
-    })
+    axios.get("movie/popular?language=en-US&page=1")
       .then(async (res) => {
-        const data = await res.json();
-        const popu = data.results.slice(0, 4);
+        const popu = res.data.results.slice(0, 4);
         setFeaturedMovies(popu);
         setActiveMovie(popu[0].id);
       })

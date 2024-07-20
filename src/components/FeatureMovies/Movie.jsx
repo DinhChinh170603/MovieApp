@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Movie = (props) => {
 
   const { featuredMovies : { overview, original_title, first_air_date, backdrop_path} } = props
-  // console.log(props.featuredMovies);
 
   return (
     <div>
       <img
-        className="aspect-video brightness-50"
+        className="aspect-video brightness-50 bg-img"
         src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
         alt={original_title}
       />
@@ -25,7 +24,7 @@ const Movie = (props) => {
           <p className="text-[1.8vw] font-bold">Overview</p>
           <p className="mt-[0.5vw]">{overview}</p>
         </div>
-        <div className="mt-4 flex gap-[1.5vw] sm:gap-[2vw]">
+        <div className="mt-4 flex gap-[1.5vw] sm:gap-[1.8vw]">
           <button className="text-[1.2vw] flex items-center gap-[0.5vw] rounded bg-white px-[1.8vw] py-[0.9vw] sm:px-[1.6vw] text-black lg:text-lg">
             <FontAwesomeIcon icon={faPlay} />
             <p>Trailer</p>
