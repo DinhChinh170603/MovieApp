@@ -19,7 +19,7 @@ const TABS = [
 const MediaList = () => {
   const [movies, setMovies] = useState([]);
 
-  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [activeTab, setActiveTab] = useState(TABS[0].id);
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/trending/${activeTab}/day?language=en-US`, {
