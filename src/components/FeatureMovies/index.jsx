@@ -6,13 +6,23 @@ const FeatureMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [activeMovie, setActiveMovie] = useState();
 
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredMovies.length);
+  //   }, 5000);
+
+  //   return () => clearInterval(interval);
+  // }, [featuredMovies.length]);
+
   useEffect(() => {
-    fetch("https://api.themoviedb.org/3/movie/popular", {
+    fetch("https://api.themoviedb.org/3/movie/popular?language=en-US&page=1", {
       method: "GET",
       headers: {
         accept: "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxODhkNDUzZTI4NDUyZmViMGYwMjJkMjhkODAxZjAxNiIsIm5iZiI6MTcyMTI4OTczOC40MjA1NzUsInN1YiI6IjY2OTU0MWE2ZWQxNzMxMjMxNmUwNTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0eALvYBNYWk5yQ-1ZvDc6IlSp0GBuovXfepJuE4uYzw",
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxODhkNDUzZTI4NDUyZmViMGYwMjJkMjhkODAxZjAxNiIsIm5iZiI6MTcyMTQ1MDc0MS4zODkzNjQsInN1YiI6IjY2OTU0MWE2ZWQxNzMxMjMxNmUwNTgzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_TWjIx0FqBkIk-SUaypORqpw-ir8FGmyexQHx_81jM",
       },
     })
       .then(async (res) => {
@@ -26,14 +36,12 @@ const FeatureMovies = () => {
       });
   }, []);
 
-  // console.log(featuredMovies);
-  console.log(activeMovie);
   return (
     <div className="relative text-white">
       {featuredMovies
-        .filter((movie) => movie.id === activeMovie)
+        .filter((movie) => activeMovie === movie.id)
         .map((movie) => (
-          <Movie key={movie.id} featuredMovies={featuredMovies} />
+          <Movie key={movie.id} featuredMovies={movie} />
         ))}
       <PaginateIndicator
         featuredMovies={featuredMovies}
