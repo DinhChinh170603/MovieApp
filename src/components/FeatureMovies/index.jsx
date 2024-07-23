@@ -11,7 +11,7 @@ const FeatureMovies = () => {
   useEffect(() => {
     axios.get("movie/popular?language=en-US&page=1")
       .then(async (res) => {
-        const popu = res.data.results.slice(0, 4);
+        const popu = await res.data.results.slice(0, 4);
         setFeaturedMovies(popu);
         setActiveMovie(popu[0].id);
       })
@@ -33,7 +33,7 @@ const FeatureMovies = () => {
   }, [featuredMovies]);
 
   return (
-    <div className="relative text-white">
+    <div className="relative text-white bg-black">
       <TransitionGroup>
         {featuredMovies
           .filter((movie) => activeMovie === movie.id)

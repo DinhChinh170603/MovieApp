@@ -2,20 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;500;600;700&display=swap");
-
 @font-face {
   font-family: "Netflix Sans";
   src:
     local("NetflixSans-Regular"),
-    url("./fonts/NetflixSans-Regular.woff2") format("woff2");
+    url("/fonts/NetflixSans-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Netflix Sans";
   src:
     local("NetflixSans-Bold"),
-    url("./fonts/NetflixSans-Bold.woff2") format("woff2");
+    url("/fonts/NetflixSans-Bold.woff2") format("woff2");
   font-weight: bold;
 }
 
@@ -23,7 +21,7 @@
   font-family: "Netflix Sans";
   src:
     local("NetflixSans-Light"),
-    url("./fonts/NetflixSans-Light.woff2") format("woff2");
+    url("/fonts/NetflixSans-Light.woff2") format("woff2");
   font-weight: 500;
 }
 
@@ -31,20 +29,34 @@
   font-family: "Netflix Sans";
   src:
     local("NetflixSans-Medium"),
-    url("./fonts/NetflixSans-Medium.woff2") format("woff2");
+    url("/fonts/NetflixSans-Medium.woff2") format("woff2");
   font-weight: 300;
 }
 
 body {
-  background: black;
   font-family: "Netflix Sans";
+  color: white;
   overflow-x: hidden;
 }
 
 .bg-img {
   background: rgb(0 0 0 / 40%);
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
 }
+
+.bg-mov-detail {
+  border-bottom: 1px solid var(--primaryColor);
+  background-position: left calc((50vw - 170px) - 340px) top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Slider */
 
 .slide-enter {
   transform: translateX(100%);
@@ -63,6 +75,8 @@ body {
   transition: transform 700ms ease-in-out;
 }
 
+/* Style Scrollbar */
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 12px;
@@ -73,10 +87,37 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(78.99deg, #E50914 3.34%, #121212 92.4%);
+  background: linear-gradient(78.99deg, #e50914 3.34%, #121212 92.4%);
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* Custom Movie Card */
+.in4-mov {
+  grid-template-areas: 
+  "aa aa aa aa aa"
+  "bb bb cc cc cc";
+  row-gap: 2vw;
+}
+
+@media (max-width: 500px) {
+  .in4-mov {
+    grid-template-areas: 
+    "aa"
+    "bb"
+    "cc";
+    row-gap: 1.5vw;
+  }
+}
+
+
+.Overview-mov {
+  grid-area: aa;
+}
+
+.Director-mov {
+  grid-area: bb;
+}
+
+.Writer-mov {
+  grid-area: cc;
 }

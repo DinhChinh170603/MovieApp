@@ -1,9 +1,10 @@
 const CircularProgressBar = ({
   vote_average = 0,
   size = 2,
-  strokeWidth = 0.2,
+  strokeWidth = .2,
+  fontSize = .75,
+  needsymbol = false,
 }) => {
-
   const radius = size / 2 - strokeWidth;
   const perimeter = 2 * Math.PI * radius;
   const transO = size / 2;
@@ -36,13 +37,14 @@ const CircularProgressBar = ({
         />
         <text
           x={`${transO}vw`} // dịch chuyển gốc O
-          y={`${transO + 0.08}vw`}
+          y={`${transO + .08}vw`}
           textAnchor="middle" // căn chữ giữa theo chiều ngang
           alignmentBaseline="middle" // căn chữ giữa theo chiều dọc
           fill="white"
-          fontSize="0.75vw"
+          fontSize={`${fontSize}vw`}
         >
           {percent}
+          {needsymbol && <a style={{ fontSize: ".4vw" }}>%</a>}
         </text>
       </svg>
     </div>

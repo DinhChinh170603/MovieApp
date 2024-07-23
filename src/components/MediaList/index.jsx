@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import axios from "../../services/axios";
+import { useNavigate } from "react-router-dom";
 
 const MediaList = ({ title, tabs }) => {
   const [movies, setMovies] = useState([]);
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id);
 
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const navigate = useNavigate();
 
-  const url = tabs.find((tab) => tab.id === activeTab)?.url;
+  // const handleCardClick = (id) => {
+  //   console.log(id);
+  //   navigate(`/movie/${id}`);
+  // };
+
+  const url = (tabs || []).find((tab) => tab.id === activeTab)?.url;
 
   useEffect(() => {
     if (url) {
-      axios.get(url)
+      axios
+        .get(url)
         .then(async (res) => {
           setMovies(res.data.results.slice(0, 12));
         })
@@ -22,7 +30,7 @@ const MediaList = ({ title, tabs }) => {
   }, [url]);
 
   return (
-    <div className="flex flex-col gap-6 bg-black px-[4vw] pt-[6vw] pb-[3vw] text-white">
+    <div className="flex flex-col gap-6 bg-black px-[4vw] pb-[3vw] pt-[6vw] text-white">
       <div className="flex items-center gap-8">
         <p className="text-[2vw] font-bold">{title}</p>
         <ul className="flex cursor-pointer rounded border border-white text-[1vw]">
@@ -37,7 +45,7 @@ const MediaList = ({ title, tabs }) => {
           ))}
         </ul>
       </div>
-      <div className="relative grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="relative grid cursor-pointer grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
