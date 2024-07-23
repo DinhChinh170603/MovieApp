@@ -118,6 +118,7 @@ body {
   grid-area: bb;
 }
 
-.Writer-mov {
+.Screenplay-mov, .Writer-mov {
   grid-area: cc;
 }
+

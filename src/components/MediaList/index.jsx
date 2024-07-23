@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 const MediaList = ({ title, tabs }) => {
   const [movies, setMovies] = useState([]);
   const [activeTab, setActiveTab] = useState(tabs[0]?.id);
-
   const navigate = useNavigate();
 
-  // const handleCardClick = (id) => {
-  //   console.log(id);
-  //   navigate(`/movie/${id}`);
-  // };
+  const handleMovieClick = (id) => {
+    navigate(`/movie/${id}`);
+  };
 
   const url = (tabs || []).find((tab) => tab.id === activeTab)?.url;
 
@@ -47,7 +45,7 @@ const MediaList = ({ title, tabs }) => {
       </div>
       <div className="relative grid cursor-pointer grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard key={movie.id} movie={movie} onClick={handleMovieClick}/>
         ))}
       </div>
     </div>

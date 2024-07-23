@@ -48,37 +48,39 @@ const MovieDetail = () => {
             alt=""
           />
         </div>
-        <div dir="auto" className="sm:flex-1 flex flex-col gap-[2vw] pl-[5vw]">
+        <div dir="auto" className="sm:flex-1 flex flex-col gap-[2vw] pl-[5vw] sm:max-w-[50vw]">
           <p className="text-[1.5vw] font-bold sm:text-[1.8vw]">
             {movie.title}
           </p>
           <div className="flex items-center gap-6 text-[1vw]">
             <span className="inline-block border border-gray-400 px-[.6vw] py-[.7vw] text-[1.2vw] text-gray-400">
-              {certi}
+              {certi ? certi : "N/A"}
             </span>
-            <span>{movie.release_date}</span>
+            <span>{movie.release_date ? movie.release_date : "N/A"}</span>
             <span>
               {(movie.genres || []).map((genre) => genre.name).join(", ")}
             </span>
           </div>
           <div className="flex items-center gap-[1.5vw] text-[1.2vw] sm:gap-[1.2vw] lg:text-lg">
-            <CircularProgressBar
-              vote_average={movie.vote_average}
-              size={3}
-              strokeWidth={0.25}
-              fontSize={0.95}
-              needsymbol={true}
-            />
-            Rating
-            <button className="flex items-center gap-1.5 bg-transparent sm:px-[1.6vw]">
+            <div>
+              <CircularProgressBar
+                vote_average={movie.vote_average}
+                size={3}
+                strokeWidth={0.25}
+                fontSize={0.95}
+                needsymbol={true}
+              />
+            </div>
+            <p>Rating</p>
+            <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]">
               <FontAwesomeIcon icon={faPlay} />
-              <p>Trailer</p>
+              <p className="align-middle">Trailer</p>
             </button>
           </div>
           <div className="in4-mov sm:grid text-[.9vw] flex flex-col">
             <div className="Overview-mov">
               <p className="py-[.7vw] text-[1.5vw] font-bold">Overview</p>
-              <p className="max-w-[10vw] sm:max-w-[30vw] md:max-w-[60vw]">{movie.overview}</p>
+              <p className="max-w-[50vw] sm:max-w-[50vw] md:max-w-[60vw]">{movie.overview}</p>
             </div>
             {Object.keys(filteredCrews).map((key) => (
               <div key={key} className={`${key}-mov`}>
