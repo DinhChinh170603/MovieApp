@@ -5,19 +5,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../services/axios";
 import { groupBy } from "lodash";
+import Loading from "/MovieApp/src/services/Loading";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(`movie/${id}?append_to_response=videos,release_dates,credits`)
       .then(async (res) => {
         setMovie(await res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
+        setLoading(false);
       });
   }, [id]);
 
@@ -34,66 +39,74 @@ const MovieDetail = () => {
   const filteredCrews = groupBy(crews, "job");
 
   return (
-    <div className="relative overflow-hidden">
-      <img
-        className="bg-img bg-mov-detail absolute inset-0 w-full brightness-[.3]"
-        src={`https://media.themoviedb.org/t/p/original${movie.backdrop_path}`}
-        alt=""
-      />
-      <div className="relative mx-auto flex max-w-[1400px] p-[3vw]">
-        <div>
-          <img
-            className="max-h-[35vw] max-w-[20vw] object-cover"
-            src={`https://media.themoviedb.org/t/p/original${movie.poster_path}`}
-            alt=""
-          />
-        </div>
-        <div dir="auto" className="sm:flex-1 flex flex-col gap-[2vw] pl-[5vw] sm:max-w-[50vw]">
-          <p className="text-[1.5vw] font-bold sm:text-[1.8vw]">
-            {movie.title}
-          </p>
-          <div className="flex items-center gap-6 text-[1vw]">
-            <span className="inline-block border border-gray-400 px-[.6vw] py-[.7vw] text-[1.2vw] text-gray-400">
-              {certi ? certi : "N/A"}
-            </span>
-            <span>{movie.release_date ? movie.release_date : "N/A"}</span>
-            <span>
-              {(movie.genres || []).map((genre) => genre.name).join(", ")}
-            </span>
+    <>
+      {loading && <Loading relative={true} hideBg={true} />}
+      <div className="relative overflow-hidden">
+        <img
+          className="bg-img bg-mov-detail absolute inset-0 w-full brightness-[.3]"
+          src={`https://media.themoviedb.org/t/p/original${movie.backdrop_path}`}
+          alt=""
+        />
+        <div className="relative mx-auto flex max-w-[1400px] p-[3vw]">
+          <div>
+            <img
+              className="max-h-[35vw] max-w-[20vw] object-cover"
+              src={`https://media.themoviedb.org/t/p/original${movie.poster_path}`}
+              alt=""
+            />
           </div>
-          <div className="flex items-center gap-[1.5vw] text-[1.2vw] sm:gap-[1.2vw] lg:text-lg">
-            <div>
-              <CircularProgressBar
-                vote_average={movie.vote_average}
-                size={3}
-                strokeWidth={0.25}
-                fontSize={0.95}
-                needsymbol={true}
-              />
+          <div
+            dir="auto"
+            className="flex flex-col gap-[2vw] pl-[5vw] sm:max-w-[50vw] sm:flex-1"
+          >
+            <p className="text-[1.5vw] font-bold sm:text-[1.8vw]">
+              {movie.title}
+            </p>
+            <div className="flex items-center gap-6 text-[1vw]">
+              <span className="inline-block border border-gray-400 px-[.6vw] py-[.7vw] text-[1.2vw] text-gray-400">
+                {certi ? certi : "N/A"}
+              </span>
+              <span>{movie.release_date ? movie.release_date : "N/A"}</span>
+              <span>
+                {(movie.genres || []).map((genre) => genre.name).join(", ")}
+              </span>
             </div>
-            <p>Rating</p>
-            <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]">
-              <FontAwesomeIcon icon={faPlay} />
-              <p className="align-middle">Trailer</p>
-            </button>
-          </div>
-          <div className="in4-mov sm:grid text-[.9vw] flex flex-col">
-            <div className="Overview-mov">
-              <p className="py-[.7vw] text-[1.5vw] font-bold">Overview</p>
-              <p className="max-w-[50vw] sm:max-w-[50vw] md:max-w-[60vw]">{movie.overview}</p>
-            </div>
-            {Object.keys(filteredCrews).map((key) => (
-              <div key={key} className={`${key}-mov`}>
-                <p className="text-[1vw] font-bold">
-                  {filteredCrews[key].map((crew) => crew.name).join(", ")}
-                </p>
-                <p>{key}</p>
+            <div className="flex items-center gap-[1.5vw] text-[1.2vw] sm:gap-[1.2vw] lg:text-lg">
+              <div>
+                <CircularProgressBar
+                  vote_average={movie.vote_average}
+                  size={3}
+                  strokeWidth={0.25}
+                  fontSize={0.95}
+                  needsymbol={true}
+                />
               </div>
-            ))}
+              <p>Rating</p>
+              <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]">
+                <FontAwesomeIcon icon={faPlay} />
+                <p className="align-middle">Trailer</p>
+              </button>
+            </div>
+            <div className="in4-mov flex flex-col text-[.9vw] sm:grid">
+              <div className="Overview-mov">
+                <p className="py-[.7vw] text-[1.5vw] font-bold">Overview</p>
+                <p className="max-w-[50vw] sm:max-w-[50vw] md:max-w-[60vw]">
+                  {movie.overview}
+                </p>
+              </div>
+              {Object.keys(filteredCrews).map((key) => (
+                <div key={key} className={`${key}-mov`}>
+                  <p className="text-[1vw] font-bold">
+                    {filteredCrews[key].map((crew) => crew.name).join(", ")}
+                  </p>
+                  <p>{key}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
