@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../services/axios";
 import { groupBy } from "lodash";
-import Loading from "/MovieApp/src/services/Loading";
+import Loading from "../services/Loading";
 
 const MovieDetail = () => {
   const { id } = useParams();
