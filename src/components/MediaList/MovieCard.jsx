@@ -13,7 +13,6 @@ const MovieCard = (props) => {
       vote_average,
       first_air_date,
     },
-    onClick,
   } = props;
 
   const nameOfMovie = title
@@ -26,7 +25,7 @@ const MovieCard = (props) => {
   const dateOfMovie = release_date ? release_date : first_air_date;
 
   return (
-    <div className="relative h-[100%] rounded-lg border border-slate-800" onClick={() => onClick(id)}>
+    <div className="relative h-[100%] rounded-lg border border-slate-800">
       <div className="relative">
         <img
           className="rounded-lg"

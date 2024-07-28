@@ -1,11 +1,10 @@
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CircularProgressBar from "../components/CircularProgressBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../services/axios";
-import { groupBy } from "lodash";
 import Loading from "../services/Loading";
+import Banner from "../components/MediaDetail/Banner";
+import ActorList from "../components/MediaDetail/ActorList";
+import Information from "../components/MediaDetail/Information";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -26,84 +25,20 @@ const MovieDetail = () => {
       });
   }, [id]);
 
-  const certi = (
-    (movie.release_dates?.results || []).find(
-      (release) => release.iso_3166_1 === "US",
-    )?.release_dates || []
-  ).find((releaseDate) => releaseDate.certification)?.certification;
-
-  const crews = (movie.credits?.crew || [])
-    .filter((crew) => ["Director", "Screenplay", "Writer"].includes(crew.job))
-    .map((crew) => ({ id: crew.id, job: crew.job, name: crew.name }));
-
-  const filteredCrews = groupBy(crews, "job");
-
   return (
     <>
       {loading && <Loading relative={true} hideBg={true} />}
-      <div className="relative overflow-hidden">
-        <img
-          className="bg-img bg-mov-detail absolute inset-0 w-full brightness-[.3]"
-          src={`https://media.themoviedb.org/t/p/original${movie.backdrop_path}`}
-          alt=""
-        />
-        <div className="relative mx-auto flex max-w-[1400px] p-[3vw]">
-          <div>
-            <img
-              className="max-h-[35vw] max-w-[20vw] object-cover"
-              src={`https://media.themoviedb.org/t/p/original${movie.poster_path}`}
-              alt=""
-            />
-          </div>
-          <div
-            dir="auto"
-            className="flex flex-col gap-[2vw] pl-[5vw] sm:max-w-[50vw] sm:flex-1"
-          >
-            <p className="text-[1.5vw] font-bold sm:text-[1.8vw]">
-              {movie.title}
-            </p>
-            <div className="flex items-center gap-6 text-[1vw]">
-              <span className="inline-block border border-gray-400 px-[.6vw] py-[.7vw] text-[1.2vw] text-gray-400">
-                {certi ? certi : "N/A"}
-              </span>
-              <span>{movie.release_date ? movie.release_date : "N/A"}</span>
-              <span>
-                {(movie.genres || []).map((genre) => genre.name).join(", ")}
-              </span>
-            </div>
-            <div className="flex items-center gap-[1.5vw] text-[1.2vw] sm:gap-[1.2vw] lg:text-lg">
-              <div>
-                <CircularProgressBar
-                  vote_average={movie.vote_average}
-                  size={3}
-                  strokeWidth={0.25}
-                  fontSize={0.95}
-                  needsymbol={true}
-                />
-              </div>
-              <p>Rating</p>
-              <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]">
-                <FontAwesomeIcon icon={faPlay} />
-                <p className="align-middle">Trailer</p>
-              </button>
-            </div>
-            <div className="in4-mov flex flex-col text-[.9vw] sm:grid">
-              <div className="Overview-mov">
-                <p className="py-[.7vw] text-[1.5vw] font-bold">Overview</p>
-                <p className="max-w-[50vw] sm:max-w-[50vw] md:max-w-[60vw]">
-                  {movie.overview}
-                </p>
-              </div>
-              {Object.keys(filteredCrews).map((key) => (
-                <div key={key} className={`${key}-mov`}>
-                  <p className="text-[1vw] font-bold">
-                    {filteredCrews[key].map((crew) => crew.name).join(", ")}
-                  </p>
-                  <p>{key}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+      <Banner mediaInfo={movie} />
+      <div className="grid grid-cols-12 gap-4 px-[4vw] pb-[3vw] pt-[4vw]">
+        <div className="col-span-12 sm:col-span-8 md:col-span-9 xl:col-span-10">
+          <ActorList actors={movie.credits?.cast.slice(0, 24) || []} />
+        </div>
+        <div className="sm:col-span-4 md:col-span-3 xl:col-span-2">
+          <Information
+            name={movie.title ? movie.title : movie.original_name}
+            country={movie.origin_country}
+            status={movie.status}
+          />
         </div>
       </div>
     </>

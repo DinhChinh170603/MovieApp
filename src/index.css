@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 @font-face {
   font-family: "Netflix Sans";
@@ -37,6 +38,7 @@ body {
   font-family: "Netflix Sans";
   color: white;
   overflow-x: hidden;
+  background-color: black;
 }
 
 .bg-img {
@@ -89,36 +91,5 @@ body {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(78.99deg, #e50914 3.34%, #121212 92.4%);
   border-radius: 5px;
-}
-
-/* Custom Movie Card */
-.in4-mov {
-  grid-template-areas: 
-  "aa aa aa aa aa"
-  "bb bb cc cc cc";
-  row-gap: 2vw;
-}
-
-@media (max-width: 500px) {
-  .in4-mov {
-    grid-template-areas: 
-    "aa"
-    "bb"
-    "cc";
-    row-gap: 1.5vw;
-  }
-}
-
-
-.Overview-mov {
-  grid-area: aa;
-}
-
-.Director-mov {
-  grid-area: bb;
-}
-
-.Screenplay-mov, .Writer-mov {
-  grid-area: cc;
 }
 
