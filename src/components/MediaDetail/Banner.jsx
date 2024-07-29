@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { groupBy } from "lodash";
 
-const Banner = ({ mediaInfo }) => {
+const Banner = ({ mediaInfo, activeTrailer, setActiveTrailer }) => {
   console.log(mediaInfo);
   const certi = (
     (mediaInfo.release_dates?.results || []).find(
@@ -62,7 +62,7 @@ const Banner = ({ mediaInfo }) => {
                 />
               </div>
               <p>Rating</p>
-              <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]">
+              <button className="flex items-center gap-[.5vw] bg-transparent sm:px-[1.6vw]" onClick={() => setActiveTrailer(!activeTrailer)}>
                 <FontAwesomeIcon icon={faPlay} />
                 <p className="align-middle">Trailer</p>
               </button>

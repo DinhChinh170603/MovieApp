@@ -4,17 +4,22 @@ import Movie from "./Movie";
 import axios from "../../services/axios";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Loading from "../../services/Loading";
+import Trailer from "../Trailer";
+// import { useAppContext } from "../../contexts/AppProvider";
 
 const FeatureMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
+  const [movie, setMovie] = useState({});
   const [activeMovie, setActiveMovie] = useState();
   const movieRefs = useRef({});
   
   const [loading, setLoading] = useState(true); 
+
+  // const { activeTrailer, setActiveTrailer } = useAppContext();
   
   useEffect(() => {
     axios
-      .get("movie/popular?language=en-US&page=1")
+      .get("movie/popular?append_to_response=videos")
       .then(async (res) => {
         const popu = await res.data.results.slice(0, 4);
         setFeaturedMovies(popu);
@@ -44,10 +49,11 @@ const FeatureMovies = () => {
   return (
     <>
       {loading && <Loading relative={true} hideBg={true} />}
+      {/* {activeTrailer && <Trailer trailer={movie.videos.results} setActiveTrailer={setActiveTrailer}/>} */}
       <div className="relative bg-black text-white">
         <TransitionGroup>
           {featuredMovies
-            .filter((movie) => activeMovie === movie.id)
+            .filter((movie) => (activeMovie === movie.id))
             .map((movie) => {
               const nodeRef = movieRefs.current[movie.id] || React.createRef();
               movieRefs.current[movie.id] = nodeRef;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NoImage from "../../assets/NoImage.svg";
+import Loading from "../../services/Loading";
 
 const ActorList = ({ actors = [] }) => {
   const [isShowMore, setIsShowMore] = useState(false);

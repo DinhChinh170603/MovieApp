@@ -4,13 +4,21 @@ import { Link } from "react-router-dom";
 
 const Movie = (props) => {
   const {
-    featuredMovies: { id, overview, original_title, first_air_date, backdrop_path },
+    featuredMovies: {
+      id,
+      overview,
+      original_title,
+      first_air_date,
+      backdrop_path,
+    },
+    // setActiveTrailer,
+    // setMovie,
   } = props;
 
   return (
     <div className="max-h-screen">
       <img
-        className="max-h-screen w-full bg-img aspect-video brightness-50"
+        className="bg-img aspect-video max-h-screen w-full brightness-50"
         src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
         alt={original_title}
       />
@@ -27,7 +35,13 @@ const Movie = (props) => {
           <p className="mt-[0.5vw]">{overview}</p>
         </div>
         <div className="mt-4 flex gap-[1.5vw] sm:gap-[1.8vw]">
-          <button className="flex items-center gap-[0.5vw] rounded-[.4vw] bg-white px-[1.8vw] py-[0.9vw] text-[1.2vw] text-black sm:rounded sm:px-[1.6vw] lg:text-lg">
+          <button
+            className="flex items-center gap-[0.5vw] rounded-[.4vw] bg-white px-[1.8vw] py-[0.9vw] text-[1.2vw] text-black sm:rounded sm:px-[1.6vw] lg:text-lg"
+            onClick={() => {
+              // setActiveTrailer(true);
+              // setMovie(props.featuredMovies);
+            }}
+          >
             <FontAwesomeIcon icon={faPlay} />
             <p>Trailer</p>
           </button>

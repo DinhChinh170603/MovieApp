@@ -1,9 +1,10 @@
 import CircularProgressBar from "../CircularProgressBar";
+import NoBackdrop from "../../assets/NoBackdrop.svg";
+
 
 const MovieCard = (props) => {
   const {
     movie: {
-      id,
       poster_path,
       release_date,
       original_name,
@@ -29,7 +30,7 @@ const MovieCard = (props) => {
       <div className="relative">
         <img
           className="rounded-lg"
-          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : `${NoBackdrop}`}
           alt={nameOfMovie}
         />
       </div>
