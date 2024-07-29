@@ -31,7 +31,7 @@ const MovieDetail = () => {
       <Banner mediaInfo={movie} />
       <div className="grid grid-cols-12 gap-4 px-[4vw] pb-[3vw] pt-[4vw]">
         <div className="col-span-12 sm:col-span-8 md:col-span-9 xl:col-span-10">
-          <ActorList actors={movie.credits?.cast.slice(0, 24) || []} />
+          <ActorList actors={movie.credits?.cast || []} />
         </div>
         <div className="sm:col-span-4 md:col-span-3 xl:col-span-2">
           <Information

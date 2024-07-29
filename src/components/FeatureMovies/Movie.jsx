@@ -8,9 +8,9 @@ const Movie = (props) => {
   } = props;
 
   return (
-    <div>
+    <div className="max-h-screen">
       <img
-        className="bg-img aspect-video brightness-50"
+        className="max-h-screen w-full bg-img aspect-video brightness-50"
         src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
         alt={original_title}
       />

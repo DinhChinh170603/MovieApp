@@ -1,6 +1,6 @@
 const PaginateIndicator = ({ featuredMovies, activeMovie, setActiveMovie }) => {
   return (
-    <div className="absolute bottom-[10%] right-8">
+    <div className="absolute bottom-[6vw] right-8">
       <ul className="flex gap-1">
         {featuredMovies.map((movie) => (
           <li

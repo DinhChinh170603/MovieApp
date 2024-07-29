@@ -8,9 +8,10 @@ import Loading from "../../services/Loading";
 const FeatureMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [activeMovie, setActiveMovie] = useState();
-  const [loading, setLoading] = useState(true); 
   const movieRefs = useRef({});
-
+  
+  const [loading, setLoading] = useState(true); 
+  
   useEffect(() => {
     axios
       .get("movie/popular?language=en-US&page=1")
