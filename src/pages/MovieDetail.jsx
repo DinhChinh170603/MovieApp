@@ -53,6 +53,8 @@ const MovieDetail = () => {
             name={movie.title ? movie.title : movie.original_name}
             country={movie.origin_country}
             status={movie.status}
+            budget={movie.budget}
+            revenue={movie.revenue}
           />
         </div>
       </div>
