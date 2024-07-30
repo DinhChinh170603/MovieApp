@@ -1,6 +1,6 @@
 const Information = ({ name, country, status, budget, revenue }) => {
   const formatNumber = (number) => {
-    return number.toLocaleString('en-US');
+    return number.toLocaleString("en-US");
   };
 
   return (
@@ -25,11 +25,15 @@ const Information = ({ name, country, status, budget, revenue }) => {
         </div>
         <div>
           <p className="text-[1.2vw] font-bold">Budget</p>
-          <p className="text-[1vw]">$ {formatNumber(budget)}</p>
+          <p className="text-[1vw]">
+            $ {budget ? formatNumber(budget) : "N/A"}
+          </p>
         </div>
         <div>
           <p className="text-[1.2vw] font-bold">Status</p>
-          <p className="text-[1vw]">$ {formatNumber(revenue)}</p>
+          <p className="text-[1vw]">
+            $ {revenue ? formatNumber(revenue) : "N/A"}
+          </p>
         </div>
         <div>
           <p className="text-[1.2vw] font-bold">Network</p>

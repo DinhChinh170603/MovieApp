@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx";
 import MovieDetail from "./pages/MovieDetail.jsx";
 import RootLayout from "./pages/RootLayout.jsx";
 import AppProvider from "./contexts/AppProvider.jsx";
+import Notfound from "./components/Notfound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         element: <MovieDetail />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Notfound />,
   },
 ]);
 
